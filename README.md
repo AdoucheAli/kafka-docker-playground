@@ -2,6 +2,73 @@
 [![Docker Stars](https://img.shields.io/docker/stars/wurstmeister/kafka.svg)](https://hub.docker.com/r/wurstmeister/kafka/)
 [![](https://badge.imagelayers.io/wurstmeister/kafka:latest.svg)](https://imagelayers.io/?images=wurstmeister/kafka:latest)
 
+Steve Notes
+===========
+
+<!--todo: setup nagios on docker swarm clusters -->
+<!--todo: setup nagios NRPE kafka swarm instance -->
+<!--todo: save new NRPE kafka instance to docker hub -->
+
+Choosing number of replicas / partitions
+- http://www.confluent.io/blog/how-to-choose-the-number-of-topicspartitions-in-a-kafka-cluster/
+
+Common Gotchas
+- https://dzone.com/articles/understanding-operating-and-monitoring-apache-kafk
+
+- New Relic JMX Stats but no alerts - https://discuss.newrelic.com/t/kafka-consumers/26346/2
+- Kafka and Zookeeper plugin - https://github.com/HariSekhon/nagios-plugins
+- check_jmx (todo: define how to enable zookeeper / kafka jmx endpoint)
+  - https://www.digitalocean.com/community/tutorials/how-to-install-nagios-4-and-monitor-your-servers-on-ubuntu-14-04
+  - https://assets.nagios.com/downloads/nagiosxi/docs/Monitoring-JMX-with-Nagios-XI.pdf
+- other monitoring tools and metrics - https://blog.serverdensity.com/how-to-monitor-kafka/
+- Log shipping??? - *possible solution* identify flume/kafka/flafka as a centralized log shipping platform,
+
+possibility for dockerization
+- single node kafka and zookeeper - https://github.com/spotify/docker-kafka
+- scalable kafka doocker compose - https://github.com/wurstmeister/kafka-docker
+
+systemctl config
+
+http://davidssysadminnotes.blogspot.ca/2016/01/installing-apache-kafka-and-zookeeper.html
+
+- kakfa.service
+[Unit]
+
+Description=Apache Kafka server (broker)
+Documentation=http://kafka.apache.org/documentation.html
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target kafka-zookeeper.service
+
+[Service]
+Type=simple
+User=kafka
+Group=kafka
+ExecStart=/opt/kafka/active/bin/kafka-server-start.sh /opt/kafka/active/config/server.properties
+ExecStop=/opt/kafka/active/bin/kafka-server-stop.sh
+
+[Install]
+WantedBy=multi-user.target
+
+-------
+
+- kafka-zookeeper.service
+[Unit]
+Description=Apache Zookeeper server (Kafka)
+Documentation=http://zookeeper.apache.org
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+User=kafka
+Group=kafka
+ExecStart=/opt/kafka/active/bin/zookeeper-server-start.sh /opt/kafka/active/config/zookeeper.properties
+ExecStop=/opt/kafka/active/bin/zookeeper-server-stop.sh
+
+[Install]
+WantedBy=multi-user.target
+-------
+
 kafka-docker
 ============
 
