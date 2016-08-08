@@ -16,12 +16,33 @@ Common Gotchas
 - https://dzone.com/articles/understanding-operating-and-monitoring-apache-kafk
 
 - New Relic JMX Stats but no alerts - https://discuss.newrelic.com/t/kafka-consumers/26346/2
+
 - Kafka and Zookeeper plugin - https://github.com/HariSekhon/nagios-plugins
+  - zookeeper nagios commands
+    define command{
+            command_name    check_zookeeper
+            command_line    $USER1$/check_zookeeper.pl --host $HOSTADDRESS$
+    }
+
+    define command{
+            command_name check_zookeeper_config
+            command_line $USER1$/check_zookeeper_config.pl --host $HOSTADDRESS$ --config $ARG1$ -vvv
+    }
+
+    define command{
+            command_name check_zookeeper_version
+            command_line $USER1$/check_zookeeper_version.py --host $HOSTADDRESS$
+    }
+
+  - kafka nagios commands
+
 - check_jmx (todo: define how to enable zookeeper / kafka jmx endpoint)
   - https://www.digitalocean.com/community/tutorials/how-to-install-nagios-4-and-monitor-your-servers-on-ubuntu-14-04
   - https://assets.nagios.com/downloads/nagiosxi/docs/Monitoring-JMX-with-Nagios-XI.pdf
 - other monitoring tools and metrics - https://blog.serverdensity.com/how-to-monitor-kafka/
 - Log shipping??? - *possible solution* identify flume/kafka/flafka as a centralized log shipping platform,
+
+
 
 possibility for dockerization
 - single node kafka and zookeeper - https://github.com/spotify/docker-kafka
