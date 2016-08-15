@@ -16,6 +16,7 @@ RUN chmod +x /usr/bin/start-zk.sh
 WORKDIR /opt/zookeeper-3.4.6
 VOLUME ["/opt/zookeeper-3.4.6/conf", "/opt/zookeeper-3.4.6/data"]
 
+#dumb init
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.1.3/dumb-init_1.1.3_amd64
 RUN chmod +x /usr/local/bin/dumb-init
 
