@@ -6,8 +6,12 @@ if [ -z "$HOST_IP" ];
 fi
 
 ZK=$2
+ZK_PORT=:2181
 if [ -z "$ZK" ];
-  then ZK=${HOST_IP}:2181;
+  then ZK=${HOST_IP}${ZK_PORT};
 fi
+
+echo HOST_IP=${HOST_IP}
+echo ZK=${ZK}
 
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -e HOST_IP=${HOST_IP} -e ZK=${ZK} -i -t baseman/kafka /bin/bash
