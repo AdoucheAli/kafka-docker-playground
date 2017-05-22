@@ -5,6 +5,8 @@ if [[ -z "$START_TIMEOUT" ]]; then
     START_TIMEOUT=600
 fi
 
+#todo: replace with dockerize
+
 start_timeout_exceeded=false
 count=0
 step=10
